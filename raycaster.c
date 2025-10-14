@@ -1,11 +1,16 @@
 #include "raycaster.h"
+#include <stdio.h>
 #include <string.h>
+#define THINWALLS
+uint32_t rgbpixel(uint8_t r, uint8_t g, uint8_t b) {
+  return 0xff000000 | (uint32_t)r | ((uint32_t)g) << 8 | ((uint32_t)b << 16);
+}
 
-void render_untextured(uint32_t *buffer, int *map, int map_w, int map_h,
-                       int view_w, int view_h, Vec2 pos, Vec2 dir,
-                       Vec2 viewplane) {
+void render_untextured(uint32_t *buffer, Map *map, int view_w, int view_h,
+                       Vec2 pos, Vec2 dir, Vec2 viewplane) {
 
   memset(buffer, 0, view_w * view_h * sizeof(uint32_t));
+
   for (int column = 0; column < view_w; column++) {
     // calculate ray position and direction
     Vec2 ray;
@@ -63,10 +68,31 @@ void render_untextured(uint32_t *buffer, int *map, int map_w, int map_h,
         side = 1;
       }
       // Check if ray has hit a wall
-      if (map[map_y * map_w + map_x] > 0)
+#ifndef THINWALLS
+      if (map->tiles[map_y * map->w + map_x].walls > 0) {
         hit = 1;
+      }
     }
-
+#else
+      if (side == 0) {
+        if (stepX < 0) {
+          int walls = map->tiles[map_y * map->w + (map_x + 1)].walls;
+          hit |= (walls & W_WALL);
+        } else {
+          int walls = map->tiles[map_y * map->w + (map_x - 1)].walls;
+          hit |= (walls & E_WALL);
+        }
+      } else if (side == 1) {
+        if (stepY < 0) {
+          int walls = map->tiles[(map_y + 1) * map->w + map_x].walls;
+          hit |= (walls & N_WALL);
+        } else {
+          int walls = map->tiles[(map_y - 1) * map->w + map_x].walls;
+          hit |= (walls & S_WALL);
+        }
+      }
+    }
+#endif
     // Calculate distance projected on camera direction (Euclidean distance
     // would give fisheye effect!)
     if (side == 0)
@@ -86,40 +112,43 @@ void render_untextured(uint32_t *buffer, int *map, int map_w, int map_h,
       drawEnd = view_h - 1;
 
     uint32_t pixel;
+    if (side)
+      pixel = rgbpixel(0, 255, 0);
+    else
+      pixel = rgbpixel(0, 255 / 2, 0);
 
-    switch (map[map_y * map_w + map_x]) {
+    /*
+     * switch (map->tiles[map_y * map->w + map_x].walls) {
     case 1:
       if (side)
-        pixel = 0xff0000ff;
+        pixel = rgbpixel(255, 0, 0);
       else
-        pixel = 0xff000080;
+        pixel = rgbpixel(255 / 2, 0, 0);
       break;
     case 2:
       if (side)
-        pixel = 0xff00ff00;
+        pixel = rgbpixel(0, 255, 0);
       else
-        pixel = 0xff008000;
+        pixel = rgbpixel(0, 255 / 2, 0);
       break;
     case 3:
       if (side)
-        pixel = 0xffff0000;
+        pixel = rgbpixel(0, 0, 255);
       else
-        pixel = 0xff800000;
+        pixel = rgbpixel(0, 0, 255 / 2);
       break;
     case 4:
       if (side)
-        pixel = 0xffffffff;
+        pixel = rgbpixel(255, 255, 255);
       else
-        pixel = 0xff808080;
+        pixel = rgbpixel(255 / 2, 255 / 2, 255 / 2);
       break;
     default:
       if (side)
-        pixel = 0xff00ffff;
+        pixel = rgbpixel(255, 255, 0);
       else
-        pixel = 0xff008080;
-    }
-    if (side == 1)
-      pixel = pixel;
+        pixel = rgbpixel(255 / 2, 255 / 2, 0);
+    }*/
 
     for (int y = drawStart; y != drawEnd; y++) {
       buffer[y * view_w + column] = pixel;

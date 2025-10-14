@@ -1,4 +1,5 @@
 #include "input.h"
+#include <SDL.h>
 
 void getinput(Input *in, int *running) {
   // pressed keys

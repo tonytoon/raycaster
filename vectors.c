@@ -29,8 +29,8 @@ double vec2_distance(Vec2 a, Vec2 b) { return vec2_length(vec2_sub(a, b)); }
 
 // Rotate vector by angle (radians)
 Vec2 vec2_rotate(Vec2 v, double angle) {
-  float c = cos(angle);
-  float s = sin(angle);
+  double c = cos(angle);
+  double s = sin(angle);
   return (Vec2){v.x * c - v.y * s, v.x * s + v.y * c};
 }
 

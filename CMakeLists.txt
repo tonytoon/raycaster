@@ -11,7 +11,7 @@ include_directories(
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 add_executable(raycaster main.c raycaster.c vectors.c sdlstuff.c input.c
-                         player.c)
+                         player.c map.c)
 add_custom_command(
   TARGET raycaster
   POST_BUILD

@@ -1,14 +1,17 @@
 #include "sdlstuff.h"
 #include <SDL.h>
 
-extern uint32_t *framebuffer;
+extern uint32_t *view_framebuffer;
+extern uint32_t *map_framebuffer;
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
-extern SDL_Texture *texture;
+extern SDL_Texture *view;
+extern SDL_Texture *maptex;
 
 int initsdl() {
   window = SDL_CreateWindow("Raycaster", SDL_WINDOWPOS_CENTERED,
-                            SDL_WINDOWPOS_CENTERED, VIEWWIDTH, VIEWHEIGHT, 0);
+                            SDL_WINDOWPOS_CENTERED, VIEWWIDTH + VIEWHEIGHT,
+                            VIEWHEIGHT, 0);
   if (!window) {
     SDL_Log("SDL_CreateWindow Error: %s", SDL_GetError());
     return 1;
@@ -20,11 +23,10 @@ int initsdl() {
     SDL_Log("SDL_CreateRenderer Error: %s", SDL_GetError());
     return 1;
   }
-  // TODO fix for big/little endian
   SDL_Surface *surface = SDL_CreateRGBSurfaceFrom(
-      framebuffer, VIEWWIDTH, VIEWHEIGHT, 32, VIEWWIDTH * sizeof(uint32_t),
-      0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
-  texture = SDL_CreateTextureFromSurface(renderer, surface);
+      view_framebuffer, VIEWWIDTH, VIEWHEIGHT, 32, VIEWWIDTH * sizeof(uint32_t),
+      R_MASK, G_MASK, B_MASK, A_MASK);
+  view = SDL_CreateTextureFromSurface(renderer, surface);
   SDL_FreeSurface(surface);
 
   return 0;

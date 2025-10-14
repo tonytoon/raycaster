@@ -1,8 +1,6 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include <SDL.h>
-
 typedef struct {
   int move_forward;
   int move_backward;
