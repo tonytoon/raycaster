@@ -16,6 +16,8 @@ Vec2 vec2_sub(Vec2 a, Vec2 b);
 Vec2 vec2_scale(Vec2 v, float s);
 // Dot product: a · b
 double vec2_dot(Vec2 a, Vec2 b);
+// Cross product: a X b
+double vec2_cross(Vec2 a, Vec2 b);
 // Length (magnitude) of vector
 double vec2_length(Vec2 v);
 // Normalize vector (make length = 1)

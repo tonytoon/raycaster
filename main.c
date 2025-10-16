@@ -1,8 +1,8 @@
 #include "input.h"
-#include "map.h"
 #include "player.h"
 #include "raycaster.h"
 #include "sdlstuff.h"
+#include "sector.h"
 #include <SDL.h>
 #include <SDL_render.h>
 #include <stdint.h>
@@ -16,7 +16,7 @@ SDL_Texture *maptex = NULL;
 uint32_t view_framebuffer[VIEWWIDTH * VIEWHEIGHT];
 uint32_t map_framebuffer[VIEWHEIGHT * VIEWHEIGHT];
 
-Player player = {.pos = {22, 12},
+Player player = {.pos = {7, 7},
                  .dir = {-1, 0},
                  .viewplane = {0, -0.66},
                  .speed = 1.0,
@@ -28,29 +28,30 @@ void gameloop() {
   Input input = {0};
   uint32_t time = 0;
   uint32_t prevtime = 0;
-  Map *map = createmap();
+  World *world = createworld();
   SDL_Rect viewarea = {0, 0, VIEWWIDTH, VIEWHEIGHT};
-  SDL_Rect maparea = {VIEWWIDTH, 0, VIEWHEIGHT, VIEWHEIGHT};
+  double fov = 90.00 * M_PI / 180;
   while (running) {
     // Handle events
     prevtime = time;
     time = SDL_GetTicks();
     double frame_time = (time - prevtime) / 1000.00;
-    player.speed = frame_time * 5.0;
-    player.rot = frame_time * 3.0;
     printf("FPS: %f\n", 1.0 / frame_time);
-
+    player.speed = frame_time * 15.0;
+    player.rot = frame_time * 3.0;
     getinput(&input, &running);
-    handleinput(&input, &player, map);
-    render_untextured(view_framebuffer, map, VIEWWIDTH, VIEWHEIGHT, player.pos,
-                      player.dir, player.viewplane);
-    maptex =
-        render_map(map, player.pos.x, player.pos.y, player.dir.x, player.dir.y);
+    handleinput(&input, &player);
+    render_sector_untextured(view_framebuffer, world, VIEWWIDTH, VIEWHEIGHT,
+                             player.pos, player.dir, fov);
+    // render_untextured(view_framebuffer, map, VIEWWIDTH, VIEWHEIGHT,
+    // player.pos,
+    //                   player.dir, player.viewplane);
+    // maptex =
+    // render_map(map, player.pos.x, player.pos.y, player.dir.x, player.dir.y);
     SDL_UpdateTexture(view, NULL, view_framebuffer,
                       VIEWWIDTH * sizeof(uint32_t));
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, view, NULL, &viewarea);
-    SDL_RenderCopy(renderer, maptex, NULL, &maparea);
     SDL_RenderPresent(renderer);
     SDL_DestroyTexture(maptex);
   }

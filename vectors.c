@@ -13,6 +13,9 @@ Vec2 vec2_scale(Vec2 v, float s) { return (Vec2){v.x * s, v.y * s}; }
 // Dot product: a · b
 double vec2_dot(Vec2 a, Vec2 b) { return a.x * b.x + a.y * b.y; }
 
+// Cross product: a X b
+double vec2_cross(Vec2 a, Vec2 b) { return a.x * b.y - a.y * b.x; }
+
 // Length (magnitude) of vector
 double vec2_length(Vec2 v) { return sqrtf(v.x * v.x + v.y * v.y); }
 

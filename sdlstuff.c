@@ -10,8 +10,7 @@ extern SDL_Texture *maptex;
 
 int initsdl() {
   window = SDL_CreateWindow("Raycaster", SDL_WINDOWPOS_CENTERED,
-                            SDL_WINDOWPOS_CENTERED, VIEWWIDTH + VIEWHEIGHT,
-                            VIEWHEIGHT, 0);
+                            SDL_WINDOWPOS_CENTERED, VIEWWIDTH, VIEWHEIGHT, 0);
   if (!window) {
     SDL_Log("SDL_CreateWindow Error: %s", SDL_GetError());
     return 1;

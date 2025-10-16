@@ -10,8 +10,15 @@ include_directories(
   ${tmx_INCLUDE_DIRS} ${LIBMIKMOD_INCLUDE_DIRS})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
-add_executable(raycaster main.c raycaster.c vectors.c sdlstuff.c input.c
-                         player.c map.c)
+add_executable(
+  raycaster
+  main.c
+  raycaster.c
+  vectors.c
+  sdlstuff.c
+  input.c
+  player.c
+  sector.c)
 add_custom_command(
   TARGET raycaster
   POST_BUILD

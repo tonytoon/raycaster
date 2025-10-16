@@ -31,6 +31,18 @@ void getinput(Input *in, int *running) {
       case SDLK_RIGHT:
         in->turn_right = down;
         break;
+      case SDLK_l:
+        in->e_wall = down;
+        break;
+      case SDLK_k:
+        in->n_wall = down;
+        break;
+      case SDLK_j:
+        in->s_wall = down;
+        break;
+      case SDLK_h:
+        in->w_wall = down;
+        break;
       case SDLK_ESCAPE:
         *running = 0;
         break;

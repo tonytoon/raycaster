@@ -8,6 +8,10 @@ typedef struct {
   int move_right;
   int turn_left;
   int turn_right;
+  int n_wall;
+  int e_wall;
+  int s_wall;
+  int w_wall;
 } Input;
 
 void getinput(Input *in, int *running);

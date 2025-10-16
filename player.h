@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include "input.h"
-#include "map.h"
 #include "vectors.h"
 
 typedef struct {
@@ -13,6 +12,6 @@ typedef struct {
   double rot;     // rotation speed per frame
 } Player;
 
-void handleinput(Input *input, Player *player, Map *map);
+void handleinput(Input *input, Player *player);
 
 #endif
