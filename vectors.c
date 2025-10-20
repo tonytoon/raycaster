@@ -11,13 +11,13 @@ Vec2 vec2_sub(Vec2 a, Vec2 b) { return (Vec2){a.x - b.x, a.y - b.y}; }
 Vec2 vec2_scale(Vec2 v, float s) { return (Vec2){v.x * s, v.y * s}; }
 
 // Dot product: a · b
-double vec2_dot(Vec2 a, Vec2 b) { return a.x * b.x + a.y * b.y; }
+float vec2_dot(Vec2 a, Vec2 b) { return a.x * b.x + a.y * b.y; }
 
 // Cross product: a X b
-double vec2_cross(Vec2 a, Vec2 b) { return a.x * b.y - a.y * b.x; }
+float vec2_cross(Vec2 a, Vec2 b) { return a.x * b.y - a.y * b.x; }
 
 // Length (magnitude) of vector
-double vec2_length(Vec2 v) { return sqrtf(v.x * v.x + v.y * v.y); }
+float vec2_length(Vec2 v) { return sqrtf(v.x * v.x + v.y * v.y); }
 
 // Normalize vector (make length = 1)
 Vec2 vec2_normalize(Vec2 v) {
@@ -28,17 +28,17 @@ Vec2 vec2_normalize(Vec2 v) {
 }
 
 // Distance between two points
-double vec2_distance(Vec2 a, Vec2 b) { return vec2_length(vec2_sub(a, b)); }
+float vec2_distance(Vec2 a, Vec2 b) { return vec2_length(vec2_sub(a, b)); }
 
 // Rotate vector by angle (radians)
-Vec2 vec2_rotate(Vec2 v, double angle) {
-  double c = cos(angle);
-  double s = sin(angle);
+Vec2 vec2_rotate(Vec2 v, float angle) {
+  float c = cos(angle);
+  float s = sin(angle);
   return (Vec2){v.x * c - v.y * s, v.x * s + v.y * c};
 }
 
 // Multiply vector by scalar
-Vec2 vec2_mul_scalar(Vec2 v, double s) { return (Vec2){v.x * s, v.y * s}; }
+Vec2 vec2_mul_scalar(Vec2 v, float s) { return (Vec2){v.x * s, v.y * s}; }
 
 // Componentwise reciprocal of vector (composition)
 Vec2 vec2_comp(Vec2 v) {

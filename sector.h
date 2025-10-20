@@ -5,8 +5,8 @@
 #include <stdlib.h>
 
 typedef struct Sector {
-  double floor_height;
-  double ceiling_height;
+  float floor_height;
+  float ceiling_height;
   int wall_start;
   int wall_count;
 } Sector;
@@ -33,5 +33,9 @@ typedef struct Ray {
 } Ray;
 
 World *createworld();
+World *create_two_sector_world();
+World *create_demo_world();
+World *create_four_connected_sectors();
+World *create_two_small_sectors();
 
 #endif

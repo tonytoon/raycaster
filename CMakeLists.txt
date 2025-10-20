@@ -13,12 +13,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 add_executable(
   raycaster
   main.c
+  worldgen.c
+  debug.c
   raycaster.c
   vectors.c
   sdlstuff.c
   input.c
   player.c
-  sector.c)
+  sector.c
+  collision.c)
 add_custom_command(
   TARGET raycaster
   POST_BUILD
