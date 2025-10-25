@@ -13,7 +13,9 @@ typedef struct Sector {
 
 typedef struct Wall {
   Vec2 a, b;
-  uint32_t rgb_color;
+  uint32_t upper_rgb_color;
+  uint32_t middle_rgb_color;
+  uint32_t lower_rgb_color;
   int neighbor;
   int texture_index;
 } Wall;
@@ -31,11 +33,5 @@ typedef struct Ray {
   Vec2 origin;
   Vec2 dir;
 } Ray;
-
-World *createworld();
-World *create_two_sector_world();
-World *create_demo_world();
-World *create_four_connected_sectors();
-World *create_two_small_sectors();
 
 #endif

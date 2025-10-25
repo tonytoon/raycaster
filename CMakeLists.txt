@@ -15,12 +15,11 @@ add_executable(
   main.c
   worldgen.c
   debug.c
-  raycaster.c
+  render.c
   vectors.c
   sdlstuff.c
   input.c
   player.c
-  sector.c
   collision.c)
 add_custom_command(
   TARGET raycaster

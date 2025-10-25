@@ -2,7 +2,7 @@
 #define PLAYER_H
 #include "collision.h"
 #include "input.h"
-#include "raycaster.h"
+#include "render.h"
 #include "sector.h"
 #include "vectors.h"
 
@@ -12,8 +12,9 @@ typedef struct {
   Vec2 pos;       // player position
   Vec2 dir;       // direction facing
   Vec2 viewplane; // camera plane (for raycasting)
-  float speed;    // move speed per frame
-  float rot;      // rotation speed per frame
+  float z;
+  float speed; // move speed per frame
+  float rot;   // rotation speed per frame
   float radius;
   int current_sector;
 } Player;

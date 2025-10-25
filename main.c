@@ -1,7 +1,7 @@
 #include "debug.h"
 #include "input.h"
 #include "player.h"
-#include "raycaster.h"
+#include "render.h"
 #include "sdlstuff.h"
 #include "sector.h"
 #include "worldgen.h"

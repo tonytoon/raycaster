@@ -112,28 +112,32 @@ World *generate_maze(int width, int height, float cell_size) {
       int cell = y * width + x;
       world->sectors[cell].wall_start = wall_idx;
       world->sectors[cell].wall_count = 4;
-      world->sectors[cell].floor_height = 0;
-      world->sectors[cell].ceiling_height = 32;
+      world->sectors[cell].floor_height = rand() % 9; // 0;
+      world->sectors[cell].ceiling_height = 32 - (rand() % 9);
 
       float cx = x * cell_size;
       float cy = y * cell_size;
 
       // Top wall
       world->walls[wall_idx++] =
-          (Wall){{cx, cy}, {cx + cell_size, cy}, 0xff808080, -1};
+          (Wall){{cx, cy},   {cx + cell_size, cy}, 0xff505050,
+                 0xff808080, 0xff505050,           -1};
       // Right wall
-      world->walls[wall_idx++] = (Wall){{cx + cell_size, cy},
-                                        {cx + cell_size, cy + cell_size},
-                                        0xff808080,
-                                        -1};
+      world->walls[wall_idx++] =
+          (Wall){{cx + cell_size, cy}, {cx + cell_size, cy + cell_size},
+                 0xff505050,           0xff808080,
+                 0xff505050,           -1};
       // Bottom wall
       world->walls[wall_idx++] = (Wall){{cx + cell_size, cy + cell_size},
                                         {cx, cy + cell_size},
+                                        0xff505050,
                                         0xff808080,
+                                        0xff505050,
                                         -1};
       // Left wall
       world->walls[wall_idx++] =
-          (Wall){{cx, cy + cell_size}, {cx, cy}, 0xff808080, -1};
+          (Wall){{cx, cy + cell_size}, {cx, cy},   0xff505050,
+                 0xff808080,           0xff505050, -1};
     }
   }
 
